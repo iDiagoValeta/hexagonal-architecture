@@ -1,0 +1,15 @@
+{
+  "core": ["src/core"],
+  "ports": ["src/core/ports"],
+  "driving_adapters": ["src/adapters/driving"],
+  "driven_adapters": ["src/adapters/driven"],
+  "composition_root": ["src/main.ts"],
+  "forbidden_in_core": [
+    "express",
+    "pg",
+    "axios",
+    "typeorm",
+    "node:fs",
+    "node:http"
+  ]
+}

@@ -1,0 +1,50 @@
+# go-arch-lint template for a Go repo with hexagonal architecture.
+# Copy it to the root as .go-arch-lint.yml and run:
+#   go-arch-lint check
+#
+# Adapt workdir and the globs under "in" to your tree. Components are
+# resolved against workdir and dependencies are allow lists: anything
+# missing from mayDependOn is forbidden.
+
+version: 3
+workdir: .
+
+# In v3 the AST linter (deepScan) is active by default. When it sees an
+# adapter injected into the core from the composition root, it counts it as
+# a dependency from the core to the adapter and reports a false positive.
+# The import check, which is what fixes the hexagon, stays active.
+allow:
+  deepScan: false
+  # In v3 third party imports are denied by default; mayDependOn only lists
+  # project components, so a real dependencies file needs vendors allowed.
+  depOnAnyVendor: true
+
+components:
+  core: { in: internal/core/** }
+  ports: { in: internal/ports/** }
+  adapters_driving: { in: internal/adapters/driving/** }
+  adapters_driven: { in: internal/adapters/driven/** }
+  cmd: { in: cmd/** }
+
+deps:
+  # The core does not appear under deps: a missing component is interpreted
+  # as "no project dependencies". An entry with an empty mayDependOn is a
+  # configuration error in go-arch-lint, not "no deps".
+  # Ports may use the core types.
+  ports:
+    mayDependOn: [core]
+  # Adapters use the core and the ports. They are not listed with each
+  # other, so an adapter that imports another adapter fails.
+  adapters_driving:
+    mayDependOn: [core, ports]
+  adapters_driven:
+    mayDependOn: [core, ports]
+  # The composition root is the only one that may depend on all of them.
+  cmd:
+    mayDependOn: [core, ports, adapters_driving, adapters_driven]
+
+# To isolate each real adapter, declare one component per folder:
+#   adapters_driven_postgres: { in: internal/adapters/driven/postgres/** }
+#   adapters_driven_memory:   { in: internal/adapters/driven/memory/** }
+# and give each one mayDependOn: [core] or [core, ports]. Since they are not
+# listed with each other, they stay disconnected.

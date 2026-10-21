@@ -1,0 +1,34 @@
+{
+  "evals": [
+    {
+      "query": "Audit my small CRUD repo and migrate it to hexagonal architecture.",
+      "expected_behavior": [
+        "Runs scripts/audit.py in read-only mode before proposing any change.",
+        "Reports the findings by severity and states what could not be checked.",
+        "Recommends not migrating because the repo is small CRUD with a single client and a single stable technology.",
+        "Explains the real cost of indirection and mappings using references/when-to-apply.md.",
+        "Offers the partial option only if the signals support it, and applies nothing without an explicit OK."
+      ]
+    },
+    {
+      "query": "My domain imports SQLAlchemy. What should I do?",
+      "expected_behavior": [
+        "Runs the audit with --path and --json and reports the dependency from the core to the ORM as high severity, with file:line.",
+        "Proposes a driven port named by purpose, a SQLAlchemy adapter that implements it, and an in-memory double for tests.",
+        "Shows the .hexagonal.json it would write and the migration step order from references/migration.md.",
+        "Explains that the core must stop importing the ORM before moving files, and that the high count must not increase.",
+        "Writes no file and runs no state-changing command without an explicit OK for that change."
+      ]
+    },
+    {
+      "query": "Add hexagonal architecture enforcement to my TypeScript repo.",
+      "expected_behavior": [
+        "Audits the repo first and states whether the TypeScript detection is explicit or inferred.",
+        "Proposes the dependency-cruiser config from assets/typescript/.dependency-cruiser.cjs, adapted to the real core and adapter paths.",
+        "Shows the diff or the exact file to copy, the npm command, and how to undo it.",
+        "Warns that the rule must fail on a deliberate forbidden import before it is trusted.",
+        "Applies nothing without an explicit OK written in the request."
+      ]
+    }
+  ]
+}
