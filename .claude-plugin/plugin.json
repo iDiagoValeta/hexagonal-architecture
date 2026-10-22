@@ -1,0 +1,30 @@
+{
+  "name": "hexagonal-architecture",
+  "version": "1.0.0",
+  "description": "Claude Code / OpenCode skill that audits a codebase for hexagonal architecture (ports and adapters): finds dependency rule violations and proposes a stepwise migration plus a CI contract",
+  "author": {
+    "name": "Ignacio Diago Valeta",
+    "url": "https://github.com/iDiagoValeta"
+  },
+  "homepage": "https://github.com/iDiagoValeta/hexagonal-architecture",
+  "repository": "https://github.com/iDiagoValeta/hexagonal-architecture",
+  "license": "MIT",
+  "keywords": [
+    "ai-agents",
+    "archunit",
+    "clean-architecture",
+    "ddd",
+    "dependency-cruiser",
+    "dependency-rule",
+    "hexagonal-architecture",
+    "import-linter",
+    "opencode",
+    "ports-and-adapters",
+    "software-architecture",
+    "architecture-linting",
+    "go-arch-lint"
+  ],
+  "skills": [
+    "./"
+  ]
+}

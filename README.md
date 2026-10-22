@@ -23,16 +23,26 @@ Findings come in four severities: high (the dependency rule is broken), medium (
 
 ## Quick start
 
+In Claude Code 2.1.275 or later:
+
+```text
+/plugin install hexagonal-architecture --marketplace iDiagoValeta/hexagonal-architecture
+```
+
+In OpenCode:
+
+```bash
+npx skills add iDiagoValeta/hexagonal-architecture -a opencode
+```
+
+Or clone and run `./install.sh`:
+
 ```bash
 git clone https://github.com/iDiagoValeta/hexagonal-architecture.git
 cd hexagonal-architecture && ./install.sh
 ```
 
-Then in Claude Code or OpenCode:
-
-```text
-/hexagonal-architecture
-```
+Then run `/hexagonal-architecture:hexagonal-architecture` if you installed the plugin, or `/hexagonal-architecture` if you used `npx skills`, `gh skill` or `install.sh`.
 
 ## Example
 
@@ -88,23 +98,64 @@ The trimmed medium findings are the driven port without an in-memory double and 
 
 ## Install
 
-### Claude Code
+### Claude Code (plugin)
+
+One step on Claude Code 2.1.275 or later:
+
+```text
+/plugin install hexagonal-architecture --marketplace iDiagoValeta/hexagonal-architecture
+```
+
+Two steps on any version with plugins:
 
 ```bash
+claude plugin marketplace add iDiagoValeta/hexagonal-architecture
+claude plugin install hexagonal-architecture@hexagonal-architecture
+```
+
+The marketplace is the repo itself, so there is nothing else to host. As a plugin the skill is invoked as `/hexagonal-architecture:hexagonal-architecture`; installed with `install.sh` or `gh skill` it is `/hexagonal-architecture`.
+
+To remove the plugin and its marketplace entry:
+
+```bash
+claude plugin marketplace remove hexagonal-architecture
+```
+
+It also uninstalls the plugins it provided and deletes their saved options and data.
+
+### OpenCode and other agents
+
+The skills CLI (vercel-labs/skills) installs the skill where the agent reads it:
+
+```bash
+npx skills add iDiagoValeta/hexagonal-architecture -a opencode
+```
+
+`pnpm dlx skills add iDiagoValeta/hexagonal-architecture -a opencode` does the same. Project scope installs into `.agents/skills/hexagonal-architecture/`, which OpenCode reads.
+
+A recent GitHub CLI with the skill command in preview installs it for any of 40+ agents, Claude Code and OpenCode included:
+
+```bash
+gh skill install iDiagoValeta/hexagonal-architecture hexagonal-architecture --agent opencode --scope user
+```
+
+Use `--agent claude-code` for Claude Code.
+
+### Manual
+
+Clone the repo and run the installer:
+
+```bash
+git clone https://github.com/iDiagoValeta/hexagonal-architecture.git
+cd hexagonal-architecture
 ./install.sh
 ```
 
 It creates the symlink `~/.claude/skills/hexagonal-architecture` pointing to `hexagonal-architecture/` in this repo. The skill is Markdown, two Python scripts and copyable CI and permission templates, so a Claude Code skill needs no plugin runtime. It is idempotent: if it already exists and points here, it does nothing; if something else exists at that path, it aborts without deleting it.
 
-### OpenCode
+OpenCode also reads `~/.claude/skills/`, so the same command works there.
 
-OpenCode also reads `~/.claude/skills/`, so the same command works:
-
-```bash
-./install.sh
-```
-
-### Per project
+#### Per project
 
 Copy the skill into the repo where you want to use it:
 
@@ -115,7 +166,7 @@ cp -r /path/to/hexagonal-architecture/hexagonal-architecture .claude/skills/
 
 That way it is versioned with the project and available only there.
 
-### Uninstall
+#### Uninstall
 
 ```bash
 ./install.sh --uninstall
@@ -130,6 +181,8 @@ In Claude Code or OpenCode:
 ```text
 /hexagonal-architecture
 ```
+
+Installed as a plugin, the same skill is `/hexagonal-architecture:hexagonal-architecture`.
 
 Or ask in natural language: "audit this repo for hexagonal architecture", "my domain imports SQLAlchemy", "add a dependency rule to CI", "can I migrate this CRUD app?".
 
@@ -148,6 +201,7 @@ The block allows everything except `git commit`, `git push` and `gh pr`, so hist
 
 ```text
 .
+├── .claude-plugin/             Claude Code plugin and marketplace manifests
 ├── hexagonal-architecture/
 │   ├── SKILL.md                Entry point: gate, flow, severity and file map
 │   ├── references/
@@ -191,6 +245,7 @@ The tests validate the audit and import extraction, the format of `SKILL.md` (fr
 
 ## Requirements
 
+- Claude Code for the plugin install, or Node.js with `npx` for the skills CLI.
 - Python 3 for the audit. Standard library only, no dependencies to install; CI runs 3.12.
 - bash for `install.sh`, which creates a symlink under `~/.claude/skills` (Linux and macOS).
 - No network access: the audit only reads the files under `--path`.

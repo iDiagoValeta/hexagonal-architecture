@@ -1,0 +1,15 @@
+{
+  "name": "hexagonal-architecture",
+  "description": "Claude Code / OpenCode skill that audits a codebase for hexagonal architecture (ports and adapters): finds dependency rule violations and proposes a stepwise migration plus a CI contract",
+  "owner": {
+    "name": "Ignacio Diago Valeta",
+    "url": "https://github.com/iDiagoValeta"
+  },
+  "plugins": [
+    {
+      "name": "hexagonal-architecture",
+      "source": "./",
+      "description": "Claude Code / OpenCode skill that audits a codebase for hexagonal architecture (ports and adapters): finds dependency rule violations and proposes a stepwise migration plus a CI contract"
+    }
+  ]
+}
