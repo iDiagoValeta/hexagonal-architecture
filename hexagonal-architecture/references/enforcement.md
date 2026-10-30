@@ -33,9 +33,11 @@ Tool: import-linter. Install it as a development dependency and copy `assets/pyt
 
 ```bash
 pip install import-linter
-cp "${CLAUDE_SKILL_DIR}/assets/python/importlinter.ini" .importlinter
+cp "<skill-dir>/assets/python/importlinter.ini" .importlinter
 lint-imports --config .importlinter
 ```
+
+`<skill-dir>` is the directory that holds this skill's `SKILL.md`, the same path `SKILL.md` uses to run the audit.
 
 The template has three contracts:
 
