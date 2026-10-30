@@ -2,6 +2,7 @@
   "name": "hexagonal-architecture",
   "version": "1.0.0",
   "description": "Agent skill that audits a codebase for hexagonal architecture (ports and adapters): finds dependency rule violations and proposes a stepwise migration plus a CI contract. Works with Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Windsurf, ZCode and any agent that reads SKILL.md",
+  "icon": ".claude-plugin/icon.png",
   "author": {
     "name": "Ignacio Diago Valeta",
     "url": "https://github.com/iDiagoValeta"
