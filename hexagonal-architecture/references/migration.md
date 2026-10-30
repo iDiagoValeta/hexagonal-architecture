@@ -22,10 +22,10 @@ Each step leaves the repo working and with fewer high findings, or the same. If 
 1. **Audit and save the baseline.** Run the audit and count findings by severity:
 
    ```bash
-   python3 "${CLAUDE_SKILL_DIR}/scripts/audit.py" --path . --json > /tmp/hexagonal-before.json
+   python3 "<skill-dir>/scripts/audit.py" --path . --json > /tmp/hexagonal-before.json
    ```
 
-   In OpenCode, use the path where the skill is installed. The JSON goes outside the repo or into the issue, not as a versioned file.
+   `<skill-dir>` is the directory that holds this skill's `SKILL.md`, the same path `SKILL.md` uses to run the audit. The JSON goes outside the repo or into the issue, not as a versioned file.
 
 2. **Write `.hexagonal.json`.** Set `core`, `ports`, `driving_adapters`, `driven_adapters`, `composition_root` and `forbidden_in_core` to the real paths. Without it, the audit infers by name and says so; inference is good enough to start, not to finish.
 
@@ -123,7 +123,7 @@ Steps 1 to 4 are repeated for each use case. Step 5 is done once per application
 After each PR:
 
 ```bash
-python3 "${CLAUDE_SKILL_DIR}/scripts/audit.py" --path . --json > /tmp/hexagonal-after.json
+python3 "<skill-dir>/scripts/audit.py" --path . --json > /tmp/hexagonal-after.json
 ```
 
 Compare by severity and by area. The total is not enough: one new high finding offset by two resolved medium ones is still a regression. Also look at findings by file to confirm that the change moved what you thought.
