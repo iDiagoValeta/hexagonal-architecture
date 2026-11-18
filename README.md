@@ -1,5 +1,7 @@
 # hexagonal-architecture
 
+> **Context.** Built in October 2026 as a personal project, when I had just started as an AI Engineer at Inditex after leading the back end at Auro AI. It belongs to the third phase of my GitHub, where I build tools to production standards with coding agents (Claude Code, opencode): CI, tests, releases and agent skills.
+
 [![CI](https://github.com/iDiagoValeta/hexagonal-architecture/actions/workflows/ci.yml/badge.svg)](https://github.com/iDiagoValeta/hexagonal-architecture/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 An agent skill for AI coding agents that audits a repository against hexagonal architecture (ports and adapters) and applies only the changes you approve. It works in Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Windsurf, ZCode and any agent that reads the open [SKILL.md format](https://agentskills.io). It checks the dependency rule in the code, not just the folder layout: domain isolation, adapter-to-adapter imports, and construction outside the composition root. It also proposes the architecture linting contract for the repo language: import-linter for Python, dependency-cruiser for TypeScript, ArchUnit for Java and go-arch-lint for Go.
